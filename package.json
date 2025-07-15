@@ -23,7 +23,9 @@
     "react-native-screens": "~4.11.1",
     "react-native-svg": "^15.12.0",
     "expo-font": "~13.3.2",
-    "expo-splash-screen": "~0.30.10"
+    "expo-splash-screen": "~0.30.10",
+    "react-native-maps": "1.20.1",
+    "expo-updates": "~0.28.17"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -1,7 +1,10 @@
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../../constant/Colors';
 import Header from '../../components/Header';
+import DroneMapComponent from '../../components/DroneMapComponent';
+import { MapPinIcon } from 'react-native-heroicons/solid';
+import { FontFamily, FontSize } from '../../constant/Typography';
 
 export default function EncontrarScreen() {
     const primaryColor = Colors.primary[500];
@@ -18,7 +21,13 @@ export default function EncontrarScreen() {
                 <Header />
 
                 <View style={styles.content}>
-                    <Text style={styles.title}>Encontrar</Text>
+                    <View style={styles.location}>
+                        <MapPinIcon color={Colors.neutro} />
+                        <Text style={styles.locationText}>Universidad Central del Ecuador</Text>
+                    </View>
+                    <View style={styles.mapContainer}>
+                        <DroneMapComponent />
+                    </View>
                 </View>
             </View>
         </LinearGradient>
@@ -36,30 +45,23 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
         gap: 20,
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
+    location: {
+        marginTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    locationText: {
         color: Colors.neutro,
+        fontFamily: FontFamily.regular,
+        fontSize: FontSize.small,
+    },
+    mapContainer: {
+        flex: 1,
+        width: '100%',
         marginBottom: 20,
-    },
-    button: {
-        backgroundColor: Colors.primary[700],
-        paddingHorizontal: 30,
-        paddingVertical: 15,
-        borderRadius: 8,
-        elevation: 3,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-    },
-    buttonText: {
-        color: Colors.neutro,
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
+    }
 });

@@ -1,11 +1,34 @@
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../../constant/Colors';
 import Header from '../../components/Header';
+import VideoStreamComponent from '../../components/VideoStreamComponent';
+import { MapPinIcon } from 'react-native-heroicons/solid';
+import { FontFamily, FontSize } from '../../constant/Typography';
+import { useStreaming } from '../../hooks/useSharedStreaming';
 
 export default function ResumenScreen() {
     const primaryColor = Colors.primary[500];
     const secondaryColor = Colors.secondary[500];
+
+    const {
+        isVideoStreaming,
+        videoLoading,
+        videoError,
+        videoQuality,
+
+        isAudioStreaming,
+        audioLoading,
+        audioError,
+        audioLevel,
+
+        startVideoStream,
+        stopVideoStream,
+        changeVideoQuality,
+
+        clearVideoError,
+        clearAudioError,
+    } = useStreaming();
 
     return (
         <LinearGradient
@@ -16,9 +39,35 @@ export default function ResumenScreen() {
         >
             <View style={styles.container}>
                 <Header />
-
                 <View style={styles.content}>
-                    <Text style={styles.title}>Resumen</Text>
+                    <View style={styles.location}>
+                        <MapPinIcon color={Colors.neutro} />
+                        <Text style={styles.locationText}>Centro Comercial "El Tejar"</Text>
+                    </View>
+
+                    <VideoStreamComponent
+                        isStreaming={isVideoStreaming}
+                        loading={videoLoading}
+                        error={videoError}
+                        quality={videoQuality}
+                        onStart={startVideoStream}
+                        onStop={stopVideoStream}
+                        onQualityChange={changeVideoQuality}
+                        onClearError={clearVideoError}
+                    />
+                    <Text style={styles.text}>Transcripción</Text>
+
+                    <View style={styles.transcriptionContainer}>
+                        <ScrollView horizontal={false} showsVerticalScrollIndicator={false}>
+                            <Text style={styles.textTranscription}>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse, illum eos praesentium, officiis doloribus nulla molestiae neque minus facere fugiat quam tempore necessitatibus mollitia ex magnam excepturi alias laborum omnis.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi veritatis debitis fugiat dolorum placeat aliquid ipsam pariatur neque consequatur? Cupiditate nemo vero, consectetur animi temporibus aliquam sapiente totam praesentium! Mollitia.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias ut rem quasi, quibusdam dicta ducimus, alias vitae impedit eius nesciunt ratione repudiandae pariatur voluptate facilis, illo vero tempore temporibus ad.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias ut rem quasi, quibusdam dicta ducimus, alias vitae impedit eius nesciunt ratione repudiandae pariatur voluptate facilis, illo vero tempore temporibus ad.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias ut rem quasi, quibusdam dicta ducimus, alias vitae impedit eius nesciunt ratione repudiandae pariatur voluptate facilis, illo vero tempore temporibus ad.
+                            </Text>
+                        </ScrollView>
+                    </View>
                 </View>
             </View>
         </LinearGradient>
@@ -35,31 +84,41 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
     },
     content: {
+        marginTop: 40,
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingTop: 20,
         gap: 20,
+        width: '100%',
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
+    location: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        justifyContent: 'center',
+    },
+    locationText: {
         color: Colors.neutro,
-        marginBottom: 20,
+        fontFamily: FontFamily.regular,
+        fontSize: FontSize.small,
     },
-    button: {
-        backgroundColor: Colors.primary[700],
-        paddingHorizontal: 30,
-        paddingVertical: 15,
-        borderRadius: 8,
-        elevation: 3,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-    },
-    buttonText: {
+    text: {
+        borderLeftColor: Colors.neutro,
+        paddingLeft: 16,
+        borderLeftWidth: 4,
         color: Colors.neutro,
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontFamily: FontFamily.bold,
+        fontSize: FontSize.body,
     },
+    transcriptionContainer: {
+        backgroundColor: 'rgba(0, 0, 0, 0.25)',
+        maxHeight: '40%',
+        padding: 16,
+        borderRadius: 16,
+    },
+    textTranscription: {
+        color: Colors.neutro,
+        fontFamily: FontFamily.light,
+        fontSize: FontSize.small,
+        lineHeight: 20,
+    }
 });

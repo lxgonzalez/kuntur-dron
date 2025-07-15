@@ -28,6 +28,19 @@
     "plugins": [
       "expo-router",
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "dc700992-d3dc-44c1-9574-720ef8f630fe"
+      }
+    },
+    "owner": "lxgonzalez",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/dc700992-d3dc-44c1-9574-720ef8f630fe"
+    }
   }
 }

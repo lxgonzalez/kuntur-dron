@@ -4,8 +4,8 @@ import { StyleSheet } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import useCustomFonts from '../hooks/useCustomFonts';
+import { StreamingProvider } from '../hooks/useSharedStreaming';
 
-// Mantener la splash screen visible mientras se cargan las fuentes
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -22,7 +22,7 @@ export default function RootLayout() {
     }
 
     return (
-        <>
+        <StreamingProvider>
             <StatusBar barStyle="light-content" />
             <Stack
                 screenOptions={{
@@ -32,7 +32,7 @@ export default function RootLayout() {
             >
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             </Stack>
-        </>
+        </StreamingProvider>
     );
 }
 

@@ -142,6 +142,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 8,
     },
+    locationText: {
+        color: Colors.neutro,
+        fontFamily: FontFamily.regular,
+        fontSize: FontSize.small,
+    },
     control: {
         alignItems: 'center',
         gap: 20,
@@ -158,11 +163,6 @@ const styles = StyleSheet.create({
         height: 175,
         borderRadius: 1000,
         borderWidth: 2,
-    },
-    locationText: {
-        color: Colors.neutro,
-        fontFamily: FontFamily.regular,
-        fontSize: FontSize.small,
     },
     statusText: {
         textAlign: 'center',
