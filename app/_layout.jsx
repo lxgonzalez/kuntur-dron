@@ -1,24 +1,30 @@
 import { Stack } from 'expo-router';
-import { StatusBar, View, Text } from 'react-native';
+import { StatusBar, View, Text, Image } from 'react-native';
 import { StyleSheet } from 'react-native';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useCustomFonts from '../hooks/useCustomFonts';
 import { StreamingProvider } from '../hooks/useSharedStreaming';
 
-SplashScreen.preventAutoHideAsync();
-
 export default function RootLayout() {
     const fontsLoaded = useCustomFonts();
+    const [appReady, setAppReady] = useState(false);
 
     useEffect(() => {
         if (fontsLoaded) {
-            SplashScreen.hideAsync();
+            const timeout = setTimeout(() => {
+                setAppReady(true);
+            }, 5000);
+
+            return () => clearTimeout(timeout);
         }
     }, [fontsLoaded]);
 
-    if (!fontsLoaded) {
-        return null;
+    if (!fontsLoaded || !appReady) {
+        return (
+            <View style={styles.splashContainer}>
+                <Image source={require('../assets/splash.gif')} style={styles.splashImage} resizeMode="contain" />
+            </View>
+        );
     }
 
     return (
@@ -37,7 +43,14 @@ export default function RootLayout() {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    splashContainer: {
         flex: 1,
+        backgroundColor: '#000',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    splashImage: {
+        width: '100%',
+        height: '100%',
     },
 });
