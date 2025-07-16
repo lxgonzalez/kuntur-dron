@@ -20,7 +20,7 @@ export const useKunturStatus = (initialStatus = 'off') => {
             const mockResponse = {
                 status: 'off',
                 timestamp: new Date().toISOString(),
-                location: 'Centro Comercial "El Tejar"'
+                location: 'Universidad Central del Ecuador'
             };
 
             setStatus(mockResponse.status);

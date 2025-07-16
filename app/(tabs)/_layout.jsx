@@ -34,17 +34,7 @@ export default function TabLayout() {
                     ),
                 }}
             />
-            <Tabs.Screen
-                name="streaming"
-                options={{
-                    title: 'Streaming',
-                    tabBarIcon: ({ color, focused }) => (
-                        focused ?
-                            <SolidIcons.SignalIcon size={16} color={color} /> :
-                            <OutlineIcons.SignalIcon size={16} color={color} />
-                    ),
-                }}
-            />
+
             <Tabs.Screen
                 name="resumen"
                 options={{
@@ -75,6 +65,17 @@ export default function TabLayout() {
                         focused ?
                             <SolidIcons.MapIcon size={16} color={color} /> :
                             <OutlineIcons.MapIcon size={16} color={color} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="user"
+                options={{
+                    title: 'Usuario',
+                    tabBarIcon: ({ color, focused }) => (
+                        focused ?
+                            <SolidIcons.UserIcon size={16} color={color} /> :
+                            <OutlineIcons.UserIcon size={16} color={color} />
                     ),
                 }}
             />

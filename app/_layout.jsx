@@ -37,7 +37,9 @@ export default function RootLayout() {
                         headerShown: false,
                         contentStyle: styles.container,
                     }}
+                    initialRouteName="index"
                 >
+                    <Stack.Screen name="index" options={{ headerShown: false }} />
                     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 </Stack>
             </StreamingProvider>

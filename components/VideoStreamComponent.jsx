@@ -3,30 +3,23 @@ import { VideoCameraIcon } from 'react-native-heroicons/solid';
 import Colors from '../constant/Colors';
 import { FontFamily, FontSize } from '../constant/Typography';
 
-export default function VideoStreamComponent({
-    isStreaming,
-    loading,
-    error,
-    quality,
-    onClearError
-}) {
-
+export default function VideoStreamComponent({ isStreaming, loading, error, onClearError }) {
     const renderVideoContent = () => {
         if (loading) {
             return (
-                <View style={styles.loadingContainer}>
+                <View style={styles.centered}>
                     <ActivityIndicator size="large" color={Colors.primary[500]} />
-                    <Text style={styles.loadingText}>Conectando...</Text>
+                    <Text style={styles.textLight}>Conectando...</Text>
                 </View>
             );
         }
 
         if (error) {
             return (
-                <View style={styles.errorContainer}>
-                    <Text style={styles.errorText}>{error}</Text>
+                <View style={styles.centered}>
+                    <Text style={styles.textError}>{error}</Text>
                     <TouchableOpacity onPress={onClearError} style={styles.retryButton}>
-                        <Text style={styles.retryButtonText}>Reintentar</Text>
+                        <Text style={styles.textButton}>Reintentar</Text>
                     </TouchableOpacity>
                 </View>
             );
@@ -34,22 +27,20 @@ export default function VideoStreamComponent({
 
         if (isStreaming) {
             return (
-                <View style={styles.streamingContainer}>
-                    <View style={styles.simulatedVideo}>
-                        <VideoCameraIcon size={40} color={Colors.primary[500]} />
-                        <View style={styles.liveIndicator}>
-                            <View style={styles.liveDot} />
-                            <Text style={styles.liveText}>EN VIVO</Text>
-                        </View>
+                <View style={styles.centered}>
+                    <VideoCameraIcon size={40} color={Colors.primary[500]} />
+                    <View style={styles.liveIndicator}>
+                        <View style={styles.liveDot} />
+                        <Text style={styles.textLive}>EN VIVO</Text>
                     </View>
                 </View>
             );
         }
 
         return (
-            <View style={styles.offlineContainer}>
+            <View style={styles.centered}>
                 <VideoCameraIcon size={40} color={Colors.dark[400]} />
-                <Text style={styles.offlineText}>Cámara desconectada</Text>
+                <Text style={styles.textOffline}>Cámara desconectada</Text>
             </View>
         );
     };
@@ -59,7 +50,6 @@ export default function VideoStreamComponent({
             <View style={styles.videoArea}>
                 {renderVideoContent()}
             </View>
-
         </View>
     );
 }
@@ -77,54 +67,39 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    loadingContainer: {
+    centered: {
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 10,
     },
-    loadingText: {
+    textLight: {
         color: Colors.neutro,
         fontFamily: FontFamily.regular,
         fontSize: FontSize.small,
+        marginTop: 8,
     },
-    errorContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 10,
-        paddingHorizontal: 20,
-    },
-    errorText: {
+    textError: {
         color: Colors.danger[500],
         fontFamily: FontFamily.regular,
         fontSize: FontSize.small,
         textAlign: 'center',
+        marginHorizontal: 20,
+        marginTop: 8,
     },
     retryButton: {
         backgroundColor: Colors.danger[500],
         paddingHorizontal: 16,
         paddingVertical: 8,
         borderRadius: 8,
+        marginTop: 8,
     },
-    retryButtonText: {
+    textButton: {
         color: Colors.neutro,
         fontFamily: FontFamily.regular,
         fontSize: FontSize.small,
     },
-    streamingContainer: {
-        width: '100%',
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    simulatedVideo: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 10,
-    },
     liveIndicator: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 6,
         marginTop: 10,
     },
     liveDot: {
@@ -132,21 +107,18 @@ const styles = StyleSheet.create({
         height: 8,
         borderRadius: 4,
         backgroundColor: Colors.danger[500],
+        marginRight: 6,
     },
-    liveText: {
+    textLive: {
         color: Colors.danger[500],
         fontFamily: FontFamily.regular,
         fontSize: FontSize.small,
         fontWeight: 'bold',
     },
-    offlineContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 10,
-    },
-    offlineText: {
+    textOffline: {
         color: Colors.dark[400],
         fontFamily: FontFamily.regular,
         fontSize: FontSize.small,
+        marginTop: 8,
     },
 });

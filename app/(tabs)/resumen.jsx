@@ -42,7 +42,7 @@ export default function ResumenScreen() {
                 <View style={styles.content}>
                     <View style={styles.location}>
                         <MapPinIcon color={Colors.neutro} />
-                        <Text style={styles.locationText}>Centro Comercial "El Tejar"</Text>
+                        <Text style={styles.locationText}>Universidad Central del Ecuador</Text>
                     </View>
 
                     <VideoStreamComponent
@@ -55,7 +55,7 @@ export default function ResumenScreen() {
                         onQualityChange={changeVideoQuality}
                         onClearError={clearVideoError}
                     />
-                    <Text style={styles.text}>Transcripción</Text>
+                    <Text style={styles.text}>Descripción</Text>
 
                     <View style={styles.transcriptionContainer}>
                         <ScrollView horizontal={false} showsVerticalScrollIndicator={false}>

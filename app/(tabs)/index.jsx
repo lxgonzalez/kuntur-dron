@@ -77,7 +77,7 @@ export default function ControlScreen() {
                 <View style={styles.content}>
                     <View style={styles.location}>
                         <MapPinIcon color={Colors.neutro} />
-                        <Text style={styles.locationText}>Centro Comercial "El Tejar"</Text>
+                        <Text style={styles.locationText}>Universidad Central</Text>
                     </View>
 
                     {error && (
