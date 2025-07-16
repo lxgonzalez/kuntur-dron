@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 import * as Crypto from 'expo-crypto';
+import { useFirebaseAuth } from './useFirebaseAuth';
 
 const UserNameContext = createContext();
 
@@ -14,27 +15,33 @@ export const useUserName = () => {
 };
 
 export const UserNameProvider = ({ children }) => {
+    const { isAuthenticated, user, logout: firebaseLogout } = useFirebaseAuth();
     const [userName, setUserName] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [location, setLocation] = useState(null);
     const [locationError, setLocationError] = useState(null);
     const [deviceId, setDeviceId] = useState(null);
 
-    // Cargar nombre del usuario desde AsyncStorage
+    // Cargar datos del usuario desde Firebase y AsyncStorage
     useEffect(() => {
-        loadUserName();
+        loadUserData();
         getOrCreateDeviceId();
-        getLocationPermission();
-    }, []);
+        if (isAuthenticated) {
+            getLocationPermission();
+        }
+    }, [isAuthenticated]);
 
-    const loadUserName = async () => {
+    const loadUserData = async () => {
         try {
-            const storedName = await AsyncStorage.getItem('userName');
-            if (storedName) {
-                setUserName(storedName);
+            if (isAuthenticated && user) {
+                // Usar el displayName de Firebase o el email como fallback
+                const displayName = user.displayName || user.email.split('@')[0];
+                setUserName(displayName);
+            } else {
+                setUserName('');
             }
         } catch (error) {
-            console.error('Error cargando nombre del usuario:', error);
+            console.error('Error cargando datos del usuario:', error);
         } finally {
             setIsLoading(false);
         }
@@ -108,24 +115,26 @@ export const UserNameProvider = ({ children }) => {
 
     const saveUserName = async (name) => {
         try {
-            await AsyncStorage.setItem('userName', name);
+            // Ya no guardamos el nombre localmente, viene de Firebase
             setUserName(name);
-            console.log('✅ Nombre guardado:', name);
+            console.log('✅ Nombre actualizado desde Firebase:', name);
         } catch (error) {
-            console.error('Error guardando nombre del usuario:', error);
+            console.error('Error actualizando nombre del usuario:', error);
         }
     };
 
     const clearUserName = async () => {
         try {
-            await AsyncStorage.removeItem('userName');
+            // Cerrar sesión de Firebase
+            await firebaseLogout();
+
+            // Limpiar estado local
             setUserName('');
-            // Limpiar también la ubicación cuando se cierre sesión
             setLocation(null);
             setLocationError(null);
             console.log('✅ Datos del usuario eliminados');
         } catch (error) {
-            console.error('Error eliminando nombre del usuario:', error);
+            console.error('Error cerrando sesión:', error);
         }
     };
 
@@ -138,6 +147,8 @@ export const UserNameProvider = ({ children }) => {
             deviceId,
             latitude: location?.coords?.latitude,
             longitude: location?.coords?.longitude,
+            isAuthenticated,
+            user,
             saveUserName,
             clearUserName,
             refreshLocation
