@@ -11,7 +11,6 @@ export default function ControlScreen() {
     const secondaryColor = Colors.secondary[500];
     const { status, loading, error, activateKuntur, deactivateKuntur } = useKunturStatus();
 
-    // Determinar colores según el estado
     const getStatusColors = () => {
         if (status === 'on') {
             return {
@@ -29,7 +28,6 @@ export default function ControlScreen() {
 
     const statusColors = getStatusColors();
 
-    // Determinar texto y icono según el estado
     const getStatusInfo = () => {
         if (loading) {
             return {
@@ -77,7 +75,7 @@ export default function ControlScreen() {
                 <View style={styles.content}>
                     <View style={styles.location}>
                         <MapPinIcon color={Colors.neutro} />
-                        <Text style={styles.locationText}>Universidad Central</Text>
+                        <Text style={styles.locationText}>Universidad Central del Ecuador</Text>
                     </View>
 
                     {error && (
