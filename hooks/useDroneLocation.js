@@ -1,9 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
+import { useUserData } from './useUserData';
+
+
 
 export const useDroneLocation = () => {
+    const { latitude, longitude, displayAddress } = useUserData();
+    const address = displayAddress || 'Universidad Central del Ecuador';
+
     const baseLocation = {
-        latitude: -0.1990152,
-        longitude: -78.5038685,
+        latitude: latitude,
+        longitude: longitude,
     };
 
     const [droneLocation, setDroneLocation] = useState(baseLocation);
@@ -13,6 +19,7 @@ export const useDroneLocation = () => {
 
 
     return {
+        address,
         droneLocation,
         droneData,
     };

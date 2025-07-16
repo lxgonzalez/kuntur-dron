@@ -1,14 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useStreaming } from './useSharedStreaming';
 
 export const useKunturStatus = (initialStatus = 'off') => {
     const [status, setStatus] = useState(initialStatus);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
-    // Obtener funciones de streaming
-    const streamingContext = useStreaming();
-    const { startAllStreams, stopAllStreams } = streamingContext || { startAllStreams: () => { }, stopAllStreams: () => { } };
 
     const fetchStatus = async () => {
         setLoading(true);
@@ -39,11 +34,8 @@ export const useKunturStatus = (initialStatus = 'off') => {
         try {
             // Simular llamada a API para activar
             await new Promise(resolve => setTimeout(resolve, 2000));
-
             setStatus('on');
 
-            // Iniciar streaming automáticamente
-            startAllStreams();
         } catch (err) {
             setError('Error al activar Kuntur');
         } finally {

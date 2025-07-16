@@ -3,7 +3,6 @@ import { StatusBar, View, Text, Image } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useEffect, useState } from 'react';
 import useCustomFonts from '../hooks/useCustomFonts';
-import { StreamingProvider } from '../hooks/useSharedStreaming';
 import { UserNameProvider } from '../hooks/useUserName';
 
 export default function RootLayout() {
@@ -30,7 +29,6 @@ export default function RootLayout() {
 
     return (
         <UserNameProvider>
-            <StreamingProvider>
                 <StatusBar barStyle="light-content" />
                 <Stack
                     screenOptions={{
@@ -42,7 +40,6 @@ export default function RootLayout() {
                     <Stack.Screen name="index" options={{ headerShown: false }} />
                     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 </Stack>
-            </StreamingProvider>
         </UserNameProvider>
     );
 }

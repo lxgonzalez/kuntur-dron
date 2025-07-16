@@ -5,11 +5,12 @@ import Header from '../../components/Header';
 import DroneMapComponent from '../../components/DroneMapComponent';
 import { MapPinIcon } from 'react-native-heroicons/solid';
 import { FontFamily, FontSize } from '../../constant/Typography';
-
+import { useUserData } from '../../hooks/useUserData';
 export default function EncontrarScreen() {
     const primaryColor = Colors.primary[500];
     const secondaryColor = Colors.secondary[500];
-
+    const { displayAddress } = useUserData();
+    const address = displayAddress || 'Universidad Central del Ecuador';
     return (
         <LinearGradient
             colors={[secondaryColor, primaryColor]}
@@ -23,7 +24,7 @@ export default function EncontrarScreen() {
                 <View style={styles.content}>
                     <View style={styles.location}>
                         <MapPinIcon color={Colors.neutro} />
-                        <Text style={styles.locationText}>Universidad Central del Ecuador</Text>
+                        <Text style={styles.locationText}>{address}</Text>
                     </View>
                     <View style={styles.mapContainer}>
                         <DroneMapComponent />

@@ -1,9 +1,7 @@
+import { useReverseGeocoding } from './useReverseGeocoding';
 import { useUserName } from './useUserName';
 
-/**
- * Hook personalizado para obtener datos específicos del usuario
- * Simplifica el acceso a los datos más comunes
- */
+
 export const useUserData = () => {
     const {
         userName,
@@ -14,6 +12,16 @@ export const useUserData = () => {
         locationError,
         refreshLocation
     } = useUserName();
+
+    const {
+        address,
+        loading: addressLoading,
+        error: addressError,
+        formattedAddress,
+        shortAddress,
+        displayAddress,
+        refreshAddress
+    } = useReverseGeocoding(latitude, longitude);
 
     return {
         // Datos básicos del usuario
@@ -26,6 +34,15 @@ export const useUserData = () => {
         location,
         locationError,
 
+        // Datos de dirección
+        address,
+        addressLoading,
+        addressError,
+        formattedAddress,
+        shortAddress,
+        displayAddress,
+        refreshAddress,
+
         // Funciones
         refreshLocation,
 
@@ -37,6 +54,8 @@ export const useUserData = () => {
         // Estado de la ubicación
         isLocationLoading: !location && !locationError,
         hasLocationError: !!locationError,
+        hasAddress: !!address,
+        hasFormattedAddress: !!formattedAddress,
 
         // Información completa del usuario
         userInfo: {
@@ -44,6 +63,9 @@ export const useUserData = () => {
             deviceId,
             latitude,
             longitude,
+            address: formattedAddress,
+            displayAddress,
+            shortAddress,
             timestamp: location?.timestamp || null,
             accuracy: location?.coords?.accuracy || null,
             altitude: location?.coords?.altitude || null,

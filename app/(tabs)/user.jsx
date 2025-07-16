@@ -5,6 +5,7 @@ import Colors from '../../constant/Colors';
 import Header from '../../components/Header';
 import { FontFamily, FontSize } from '../../constant/Typography';
 import { useUserName } from '../../hooks/useUserName';
+import { useReverseGeocoding } from '../../hooks/useReverseGeocoding';
 import Constants from 'expo-constants';
 import * as Updates from 'expo-updates';
 import { UserIcon, DevicePhoneMobileIcon, InformationCircleIcon, IdentificationIcon, MapPinIcon } from 'react-native-heroicons/solid';
@@ -23,6 +24,14 @@ export default function UserScreen() {
         refreshLocation
     } = useUserName();
     const router = useRouter();
+
+    // Hook para obtener dirección
+    const {
+        formattedAddress,
+        loading: addressLoading,
+        error: addressError,
+        refreshAddress
+    } = useReverseGeocoding(latitude, longitude);
 
     const handleLogout = () => {
         Alert.alert(
@@ -103,6 +112,16 @@ export default function UserScreen() {
                         <View style={styles.containerBlack}>
                             {location ? (
                                 <>
+                                    {/* Dirección */}
+                                    <View style={styles.infoRow}>
+                                        <Text style={styles.label}>Dirección:</Text>
+                                        <Text style={styles.value}>
+                                            {addressLoading ? 'Obteniendo...' :
+                                                addressError ? 'No disponible' :
+                                                    formattedAddress || 'No disponible'}
+                                        </Text>
+                                    </View>
+                                    {/* Coordenadas */}
                                     <View style={styles.infoRow}>
                                         <Text style={styles.label}>Latitud:</Text>
                                         <Text style={styles.value}>{location.coords.latitude.toFixed(6)}</Text>
@@ -131,7 +150,10 @@ export default function UserScreen() {
                                     <Text style={styles.value}>Obteniendo ubicación...</Text>
                                 </View>
                             )}
-                            <TouchableOpacity style={styles.refreshButton} onPress={refreshLocation}>
+                            <TouchableOpacity style={styles.refreshButton} onPress={() => {
+                                refreshLocation();
+                                refreshAddress();
+                            }}>
                                 <Text style={styles.refreshText}>Actualizar Ubicación</Text>
                             </TouchableOpacity>
                         </View>

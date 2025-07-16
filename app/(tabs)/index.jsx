@@ -5,11 +5,14 @@ import { FontFamily, FontSize } from '../../constant/Typography';
 import Header from '../../components/Header';
 import { MapPinIcon, ShieldExclamationIcon, ShieldCheckIcon, PowerIcon } from "react-native-heroicons/solid";
 import { useKunturStatus } from '../../hooks/useKunturStatus';
+import { useUserData } from '../../hooks/useUserData';
 
 export default function ControlScreen() {
     const primaryColor = Colors.primary[500];
     const secondaryColor = Colors.secondary[500];
     const { status, loading, error, activateKuntur, deactivateKuntur } = useKunturStatus();
+    const { displayAddress } = useUserData();
+    const address = displayAddress || 'Universidad Central del Ecuador';
 
     const getStatusColors = () => {
         if (status === 'on') {
@@ -75,7 +78,7 @@ export default function ControlScreen() {
                 <View style={styles.content}>
                     <View style={styles.location}>
                         <MapPinIcon color={Colors.neutro} />
-                        <Text style={styles.locationText}>Universidad Central del Ecuador</Text>
+                        <Text style={styles.locationText}>{address}</Text>
                     </View>
 
                     {error && (
