@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import { useEffect, useState } from 'react';
 import useCustomFonts from '../hooks/useCustomFonts';
 import { StreamingProvider } from '../hooks/useSharedStreaming';
+import { UserNameProvider } from '../hooks/useUserName';
 
 export default function RootLayout() {
     const fontsLoaded = useCustomFonts();
@@ -28,17 +29,19 @@ export default function RootLayout() {
     }
 
     return (
-        <StreamingProvider>
-            <StatusBar barStyle="light-content" />
-            <Stack
-                screenOptions={{
-                    headerShown: false,
-                    contentStyle: styles.container,
-                }}
-            >
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            </Stack>
-        </StreamingProvider>
+        <UserNameProvider>
+            <StreamingProvider>
+                <StatusBar barStyle="light-content" />
+                <Stack
+                    screenOptions={{
+                        headerShown: false,
+                        contentStyle: styles.container,
+                    }}
+                >
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                </Stack>
+            </StreamingProvider>
+        </UserNameProvider>
     );
 }
 
